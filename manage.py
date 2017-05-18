@@ -1,9 +1,26 @@
-# -*-encoding=UTF-8 -*-
+# -*- encoding: utf-8 -*-
 
-from lsinstagram import app
+from lsinstagram import app,db
 from flask_script import Manager
-
+import random
+from lsinstagram.models import User,Image,Comment
 manager = Manager(app)
 
+def get_image_url():
+    return 'http://images.nowcoder.com/head/'+str(random.randint(0,1000))+'m.png'
+
+@manager.command
+def init_database():
+    db.drop_all()
+    db.create_all()
+    for i in range(0,100):
+        db.session.add(User('User'+str(i),'a'+str(i)))
+        for j in range(0,3):
+            db.session.add(Image(get_image_url))
+            for k in range(0,3):
+                db.session.add(Comment('this is a comment ')+str(k),1+3*i+j,1+j)
+    db.session.commit()
+
+    print 1,User.query.all()
 if __name__=='__main__':
     manager.run()
