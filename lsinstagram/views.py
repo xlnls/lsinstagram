@@ -7,7 +7,7 @@ from models import Image,User
 @app.route('/')
 def index():
     images  = Image.query().order_by('id. desc').limit(10).all()
-    return render_template('index.html',images=images)
+    return render_template("index.html",images=images)
 
 @app.route('/image/<int:image_id>')
 def image(image_id):
