@@ -1,10 +1,24 @@
 # -*- coding=utf-8 -*-
 
 from lsinstagram import app
-from flask import render_template
+from flask import render_template,redirect
 from models import Image,User
+
 @app.route('/')
 def index():
-    image  = Image.query()
+    images  = Image.query().order_by('id. desc').limit(10).all()
+    return render_template('index.html',images=images)
 
-    return render_template('index.html')
+@app.route('/image/<int:image_id>')
+def image(image_id):
+    image = Image.query.get(image_id)
+    if image ==None:
+        return redirect('/')
+    return render_template('pageDetail.html',image=image)
+
+@app.route('/profile/<int:user_id>/')
+def profile(user_id):
+     user = User.query.get(user_id)
+     if user==None:
+         return redirect('/')
+     return render_template('profile.html',user=user)

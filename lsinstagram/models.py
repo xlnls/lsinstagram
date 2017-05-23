@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
-    content = url = db.Column(db.String(1024))
+    content = db.Column(db.String(1024))
     image_id =  db.Column(db.Integer, db.ForeignKey('image.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     status = db.Column(db.Integer,default=0)
@@ -15,7 +15,6 @@ class Comment(db.Model):
         self.content=content
         self.image_id=image_id
         self.user_id=user_id
-
 
     def __repr__(self):
         return '<Comment %d %s>' % (self.id, self.content)
@@ -41,7 +40,6 @@ class User(db.Model):
     password = db.Column(db.String(64))
     head_url = db.Column(db.String(256))
     images = db.relationship('Image')
-
 
 
     def __init__(self,username,password):
