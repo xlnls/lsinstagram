@@ -13,14 +13,13 @@ def get_image_url():
 def init_database():
     db.drop_all()
     db.create_all()
-    for i in range(0,100):
-        db.session.add(User('User'+str(i),'a'+str(i)))
-        for j in range(0,3):
-            db.session.add(Image(get_image_url))
-            for k in range(0,3):
-                db.session.add(Comment('this is a comment ')+str(k),1+3*i+j,1+j)
+    for i in range(0, 100):
+        db.session.add(User('胡歌' + str(i), 'a' + str(i)))
+        for j in range(0, 3):
+            db.session.add(Image(get_image_url(),i+1))
+            for k in range(0, 3):
+                db.session.add(Comment('胡歌真帅 '+str(k), 1 + 3 * i + j, 1 + j))
     db.session.commit()
 
-    print 1,User.query.all()
 if __name__=='__main__':
     manager.run()
